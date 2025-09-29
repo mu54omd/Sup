@@ -8,8 +8,8 @@ import kotlinx.browser.document
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
+    initKoin()
     ComposeViewport(document.body!!) {
-        initKoin()
         App()
     }
 }

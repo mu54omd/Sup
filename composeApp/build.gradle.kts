@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -22,9 +24,13 @@ kotlin {
     jvm()
     
     @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
+    wasmJs() {
         browser()
         binaries.executable()
+        compilerOptions {
+            freeCompilerArgs.add("-Xwasm-debugger-custom-formatters")
+
+        }
     }
     
     sourceSets {
@@ -69,12 +75,12 @@ kotlin {
             implementation(libs.sql.sqlite.driver)
 
         }
-        jsMain.dependencies {
+        wasmJsMain.dependencies {
             implementation(libs.ktor.client.js)
-            implementation(libs.sql.sqljs.driver)
-            implementation(npm("sql.js", "1.6.2"))
-            implementation(devNpm("copy-webpack-plugin", "9.1.0"))
-
+            implementation(libs.sql.web.worker.driver)
+            implementation(npm("@cashapp/sqldelight-sqljs-worker", "2.1.0"))
+            implementation (npm("sql.js", "1.13.0"))
+            implementation(devNpm("copy-webpack-plugin", "13.0.1"))
         }
     }
 }
@@ -124,7 +130,8 @@ compose.desktop {
 sqldelight {
     databases {
         create(name = "SupDatabase"){
-            packageName.set("mu54omd.sup.db")
+            packageName.set("com.mu54omd.sup.db")
+            generateAsync.set(true)
         }
     }
 }

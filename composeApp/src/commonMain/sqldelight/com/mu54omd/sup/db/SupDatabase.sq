@@ -9,7 +9,8 @@ insertArticles:
 INSERT INTO Article(title, description, date, imageUrl) VALUES (?, ?, ?, ?);
 
 selectAll:
-SELECT Article.* FROM Article;
+-- SELECT Article.* FROM Article;
+SELECT * FROM Article;
 
 removeAll:
 DELETE FROM Article;

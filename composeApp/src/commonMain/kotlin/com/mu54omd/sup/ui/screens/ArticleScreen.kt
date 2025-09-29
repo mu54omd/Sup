@@ -39,9 +39,9 @@ import org.koin.compose.viewmodel.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticlesScreen(
-    onAboutButtonClick: () -> Unit,
     articlesViewModel: ArticlesViewModel = koinViewModel<ArticlesViewModel>(),
-) {
+    onAboutButtonClick: () -> Unit,
+    ) {
     val articlesState = articlesViewModel.articlesState.collectAsState()
     val pullToRefreshState = rememberPullToRefreshState()
 
